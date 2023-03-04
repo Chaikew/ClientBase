@@ -61,7 +61,7 @@ open class SetupWorkspaceTask: BaseTask() {
 
 
 
-            println("> Decompiling Minecraft using MCP...")
+            println("> Decompiling Minecraft using MCP (this might take some time)...")
             if (projectTempMCPDir.exists()) {
                 projectTempMCPDir.deleteRecursively()
             }
@@ -75,18 +75,11 @@ open class SetupWorkspaceTask: BaseTask() {
 
             val procbuild: ProcessBuilder = ProcessBuilder(File("tempMCP", decompileScript).absolutePath, "--norecompile", "--client")
                 .directory(projectTempMCPDir)
-                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
-                .redirectError(ProcessBuilder.Redirect.INHERIT)
+                .inheritIO()
 
             val proc = procbuild.start()
 
-            while (proc.isAlive) {
-                proc.inputStream.copyTo(System.out)
-                proc.errorStream.copyTo(System.err)
-                Thread.sleep(450) // wait a bit to avoid performance issues
-            }
-
-            proc.waitFor() // technically not needed, but just in case
+            proc.waitFor()
             assert(proc.exitValue() == 0) { "Failed to decompile Minecraft using MCP" }
 
 

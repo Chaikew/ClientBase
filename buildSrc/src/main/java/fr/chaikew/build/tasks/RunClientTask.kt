@@ -52,7 +52,9 @@ open class RunClientTask: BaseTask() {
             "--assetIndex", "1.8",
             "--userProperties", "{}",
             "--gameDir", File(".", "run").absolutePath,
-        ).start()
+        )
+            .inheritIO()
+            .start()
         proc.waitFor()
         println("Minecraft exited with code ${proc.exitValue()}")
     }
