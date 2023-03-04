@@ -1,0 +1,15 @@
+# IDE
+/.idea/
+/*.iml
+/*.ipr
+/*.iws
+
+# Gradle
+/.gradle/
+
+# Generated
+/libs/
+/natives/
+/build/
+/run/
+/tempMCP/
