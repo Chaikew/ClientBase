@@ -13,6 +13,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
+val bundled: Configuration by configurations.creating {
+    configurations.implementation.get().extendsFrom(this)
+}
+
 group = "com.example"
 version = "1.0-SNAPSHOT"
 
@@ -20,6 +24,15 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
+dependencies {}
 
+tasks.withType<Jar> {
+    from(bundled.map {
+        if (it.isDirectory)
+            it
+        else
+            zipTree(it).matching {
+                exclude("META-INF/**")
+            }
+    })
 }

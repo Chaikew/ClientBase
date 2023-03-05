@@ -1,7 +1,6 @@
 package fr.chaikew.build.tasks
 
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.util.zip.ZipFile

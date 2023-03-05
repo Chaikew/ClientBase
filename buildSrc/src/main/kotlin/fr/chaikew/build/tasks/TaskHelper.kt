@@ -8,8 +8,8 @@ import java.io.File
 import java.util.zip.ZipFile
 
 class TaskHelper(private val project: Project) {
-    val sourceSets = project.extensions.getByType(SourceSetContainer::class.java)
-    val mainSourceSet = sourceSets.getByName("main")
+    val sourceSets: SourceSetContainer = project.extensions.getByType(SourceSetContainer::class.java)
+    val mainSourceSet: SourceSet = sourceSets.getByName("main")
 
     val mcClientVersion: String = project.properties.getOrDefault("mcClientVersion", "1.8.9") as String
     val mcClientJar: File = getMinecraftHome().resolve("versions").resolve(mcClientVersion).resolve("$mcClientVersion.jar")

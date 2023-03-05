@@ -2,7 +2,6 @@ package fr.chaikew.build.tasks
 
 import fr.chaikew.build.isWindows
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.io.FileNotFoundException

@@ -1,7 +1,6 @@
 package fr.chaikew.build.tasks
 
 import org.gradle.api.tasks.JavaExec
-import org.gradle.api.tasks.TaskAction
 import java.io.File
 
 open class RunClientTask: JavaExec() {

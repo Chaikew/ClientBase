@@ -5,7 +5,6 @@ import fr.chaikew.build.isLinux
 import fr.chaikew.build.isMac
 import fr.chaikew.build.isWindows
 import org.gradle.api.DefaultTask
-import org.gradle.api.tasks.Copy
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.net.URL

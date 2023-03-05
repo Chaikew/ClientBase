@@ -17,6 +17,11 @@ open class AssembleClientTask: DefaultTask() {
         val outputDir = project.buildDir.resolve("libs")
         val gradleGeneratedJar = outputDir.resolve("${project.name}-${project.version}.jar")
 
+        val outputClientJar = outputDir.resolve("${project.name}.jar")
+        if (outputClientJar.exists()) {
+            outputClientJar.delete()
+        }
+
         // copy client.json
         val outputClientJson = outputDir.resolve("${project.name}.json")
         Files.copy(task.mcClientJson.toPath(), outputClientJson.toPath(), StandardCopyOption.REPLACE_EXISTING)
@@ -32,6 +37,6 @@ open class AssembleClientTask: DefaultTask() {
         clientJson["id"] = project.name
 
         // copy the jar
-        gradleGeneratedJar.renameTo(outputDir.resolve("${project.name}.jar"))
+        gradleGeneratedJar.renameTo(outputClientJar)
     }
 }
