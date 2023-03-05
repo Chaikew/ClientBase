@@ -1,12 +1,14 @@
 package fr.chaikew.build.tasks
 
 import fr.chaikew.build.isWindows
+import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.TaskAction
 import java.io.File
 import java.io.FileNotFoundException
 import java.util.zip.ZipFile
 
-open class DecompileMinecraftTask: org.gradle.api.DefaultTask() {
+open class DecompileMinecraftTask: DefaultTask() {
     private val task = TaskHelper(project)
 
     private fun shouldRun(): Boolean {
@@ -36,7 +38,7 @@ open class DecompileMinecraftTask: org.gradle.api.DefaultTask() {
         if (!shouldRun())
             return
 
-        println("> Decompiling Minecraft using MCP (this might take some time)...")
+        println("> Extracting MCP...")
         if (task.projectTempMCPDir.exists()) {
             task.projectTempMCPDir.deleteRecursively()
         }
@@ -45,17 +47,20 @@ open class DecompileMinecraftTask: org.gradle.api.DefaultTask() {
         // unzip $mcpZip to tempMCP
         task.unzip(task.mcpZip.absolutePath, task.projectTempMCPDir.absolutePath)
 
+
+
+
+        println("> Decompiling Minecraft using MCP (this might take some time)...")
         val decompileScript = if (isWindows()) "decompile.bat"
         else "decompile.sh"
 
-        val procbuild: ProcessBuilder = ProcessBuilder(File("tempMCP", decompileScript).absolutePath, "--norecompile", "--client")
-            .directory(task.projectTempMCPDir)
-            .inheritIO()
+        val decompile = project.exec {
+            workingDir = task.projectTempMCPDir
+            commandLine = listOf(File(task.projectTempMCPDir, decompileScript).absolutePath, "--norecompile", "--client")
+        }
+        decompile.assertNormalExitValue()
 
-        val proc = procbuild.start()
 
-        proc.waitFor()
-        assert(proc.exitValue() == 0) { "Failed to decompile Minecraft using MCP" }
 
 
         val mcpDecompiledDir = task.projectTempMCPDir.resolve("src").resolve("minecraft")
