@@ -14,6 +14,10 @@ open class RunClientTask: JavaExec() {
         mainClass.set("net.minecraft.client.main.Main")
         classpath = task.mainSourceSet.runtimeClasspath
         workingDir = File("run")
+        
+        if (!workingDir.exists()) {
+            workingDir.mkdirs()
+        }
 
         jvmArgs = listOf(
             "-Djava.library.path=${task.projectNativesDir.absolutePath}"
