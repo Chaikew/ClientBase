@@ -8,7 +8,7 @@ Known issues:
   ```
 
 ## Disclaimer
-This repo contains a patched version of MCP 918 (mcp.zip) the credits for the original code go to the original authors. This repo is only for educational purposes and should not be used for commercial purposes. The code is provided as is and without any warranty. The author is not responsible for any damage caused by the code.
+This repo contains a patched version of MCP 918 (mcp.zip) the credits for the original code go to the original authors. The code is provided as is and without any warranty. The author is not responsible for any damage caused by the code.
 Mojang owns the Minecraft name, brand and assets.
 This project nor the author is affiliated with Mojang in any way.
 Please follow the [Mojang EULA](https://account.mojang.com/documents/minecraft_eula) and the [Mojang Terms of Service](https://account.mojang.com/terms).
