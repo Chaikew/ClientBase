@@ -1,21 +1,25 @@
 package fr.chaikew.build.tasks
 
+import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.TaskAction
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
-open class AssembleClientTask: BaseTask() {
+open class AssembleClientTask: DefaultTask() {
+    private val task = TaskHelper(project)
+
     init {
-        project.tasks.getByName("build").finalizedBy(this)
+        this.dependsOn(project.tasks.getByName("build"))
     }
+
     @TaskAction
-    public fun run() {
+    fun run() {
         val outputDir = project.buildDir.resolve("libs")
         val gradleGeneratedJar = outputDir.resolve("${project.name}-${project.version}.jar")
 
         // copy client.json
         val outputClientJson = outputDir.resolve("${project.name}.json")
-        Files.copy(mcClientJson.toPath(), outputClientJson.toPath(), StandardCopyOption.REPLACE_EXISTING)
+        Files.copy(task.mcClientJson.toPath(), outputClientJson.toPath(), StandardCopyOption.REPLACE_EXISTING)
 
         // edit it
         val clientJson = (groovy.json.JsonSlurper().parseText(outputClientJson.readText()) as Map<*, *>).toMutableMap()
